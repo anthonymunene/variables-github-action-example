@@ -38,11 +38,17 @@ async function main() {
   }
 
   Object.entries(tokensFiles).forEach(([fileName, fileContent]) => {
-    fs.writeFileSync(`${outputDir}/${fileName}`, JSON.stringify(fileContent, null, 2))
-    console.log(`Wrote ${fileName}`)
+    const sanitisedFileName = sanitizeFilename(fileName)
+    fs.writeFileSync(`${outputDir}/${sanitisedFileName}`, JSON.stringify(fileContent, null, 2))
+    console.log(`Wrote ${sanitisedFileName}`)
   })
 
   console.log(green(`✅ Tokens files have been written to the ${outputDir} directory`))
 }
 
+const sanitizeFilename = (filename: string) => {
+  return  filename.replace(/\s+/g, '')
+    .replace(/\//g, '-')
+    .toLowerCase()
+}
 main()
