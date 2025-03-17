@@ -1,0 +1,12 @@
+/* space variables for bos */
+:root {
+  --space-padding-card-default: 24;
+  --space-padding-card-sm-negative: 0;
+  --space-padding-card-sm-positive: 16;
+  --space-padding-button-focus: 5;
+  --space-gap-generic-sm: 16;
+  --space-gap-generic-md: 24;
+  --space-gap-generic-lg: 32;
+  --space-gap-title-default: 16;
+  --space-gap-toggle-default: 0;
+}

@@ -1,0 +1,29 @@
+/* border variables for moja */
+:root {
+  --border-moja-off-lloyds-on: 0;
+  --border-card-default: 1;
+  --border-card-inverse: 0;
+  --border-checkbox-default: 2;
+  --border-checkbox-selected: 2;
+  --border-checkbox-focus-inner: 2;
+  --border-checkbox-focus-outer: 2;
+  --border-icons-default: 2;
+  --border-icons-md: 1.75;
+  --border-icons-sm: 1.5;
+  --border-icons-xs: 1.2000000476837158;
+  --border-icons-xxs: 1;
+  --border-input-default: 1;
+  --border-input-active: 2;
+  --border-notice-banner-default: 0;
+  --border-radio-default: 2;
+  --border-radio-selected: 2;
+  --border-radio-focus-inner: 2;
+  --border-radio-focus-outer: 2;
+  --border-selector-default: 2;
+  --border-selector-default-inverse: 2;
+  --border-selector-unselected: 0;
+  --border-toggles-outer: 0;
+  --border-toggles-outer-none: 0;
+  --border-toggles-inner: 0;
+  --border-step-inner: 0;
+}

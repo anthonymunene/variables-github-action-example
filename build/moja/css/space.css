@@ -1,0 +1,12 @@
+/* space variables for moja */
+:root {
+  --space-padding-card-default: 0;
+  --space-padding-card-sm-negative: 16;
+  --space-padding-card-sm-positive: 0;
+  --space-padding-button-focus: 0;
+  --space-gap-generic-sm: 16;
+  --space-gap-generic-md: 24;
+  --space-gap-generic-lg: 32;
+  --space-gap-title-default: 16;
+  --space-gap-toggle-default: 0;
+}

@@ -1,0 +1,20 @@
+/* DS variables for wireframe */
+:root {
+  --ds-stroke: #7b61ff;
+  --ds-post-it: #f0e472;
+  --ds-post-it-2: #9cf072;
+  --ds-page: #ffffff;
+  --ds-page-inverse: #000000;
+  --ds-page-header: #393939;
+  --ds-header-divider: #262626;
+  --ds-page-titles: #ffffff;
+  --ds-section: #f4f4f4;
+  --ds-section-title: #393939;
+  --ds-section-subtitle-2: #068482;
+  --ds-card: #ffffff;
+  --ds-component-surface: #ffffff;
+  --ds-name: #7b61ff;
+  --ds-annotation: #6f6f6f;
+  --ds-icon-missing: #f108af;
+  --ds-border-highlight: #f108af;
+}

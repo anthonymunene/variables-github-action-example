@@ -1,0 +1,18 @@
+/* radius variables for halifax */
+:root {
+  --radius-button-default: 64;
+  --radius-button-focus: 64;
+  --radius-checkbox-default: 6;
+  --radius-checkbox-focus: 8;
+  --radius-generic-none: 0;
+  --radius-generic-2xs: 6;
+  --radius-generic-xs: 8;
+  --radius-generic-sm: 12;
+  --radius-generic-md: 16;
+  --radius-generic-lg: 24;
+  --radius-generic-circle: 100;
+  --radius-notification-default: 8;
+  --radius-panel-default: 0;
+  --radius-toggle-inner: 64;
+  --radius-toggle-outer: 64;
+}

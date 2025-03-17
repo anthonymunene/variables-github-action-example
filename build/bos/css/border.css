@@ -1,0 +1,29 @@
+/* border variables for bos */
+:root {
+  --border-moja-off-lloyds-on: 1;
+  --border-card-default: 0;
+  --border-card-inverse: 1;
+  --border-checkbox-default: 1;
+  --border-checkbox-selected: 2;
+  --border-checkbox-focus-inner: 1;
+  --border-checkbox-focus-outer: 2;
+  --border-icons-default: 1.5;
+  --border-icons-md: 1;
+  --border-icons-sm: 1.5;
+  --border-icons-xs: 0.800000011920929;
+  --border-icons-xxs: 0.75;
+  --border-input-default: 1;
+  --border-input-active: 1;
+  --border-notice-banner-default: 0;
+  --border-radio-default: 1;
+  --border-radio-selected: 1;
+  --border-radio-focus-inner: 1;
+  --border-radio-focus-outer: 2;
+  --border-selector-default: 2;
+  --border-selector-default-inverse: 0;
+  --border-selector-unselected: 1;
+  --border-toggles-outer: 1;
+  --border-toggles-outer-none: 0;
+  --border-toggles-inner: 0;
+  --border-step-inner: 6;
+}

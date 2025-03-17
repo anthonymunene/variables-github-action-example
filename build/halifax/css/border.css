@@ -1,0 +1,29 @@
+/* border variables for halifax */
+:root {
+  --border-moja-off-lloyds-on: 1;
+  --border-card-default: 0;
+  --border-card-inverse: 1;
+  --border-checkbox-default: 2;
+  --border-checkbox-selected: 2;
+  --border-checkbox-focus-inner: 2;
+  --border-checkbox-focus-outer: 2;
+  --border-icons-default: 1.5;
+  --border-icons-md: 1;
+  --border-icons-sm: 1.5;
+  --border-icons-xs: 0.800000011920929;
+  --border-icons-xxs: 0.75;
+  --border-input-default: 2;
+  --border-input-active: 2;
+  --border-notice-banner-default: 2;
+  --border-radio-default: 2;
+  --border-radio-selected: 2;
+  --border-radio-focus-inner: 2;
+  --border-radio-focus-outer: 2;
+  --border-selector-default: 2;
+  --border-selector-default-inverse: 0;
+  --border-selector-unselected: 2;
+  --border-toggles-outer: 2;
+  --border-toggles-outer-none: 0;
+  --border-toggles-inner: 2;
+  --border-step-inner: 6;
+}

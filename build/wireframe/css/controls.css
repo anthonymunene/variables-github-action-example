@@ -1,0 +1,21 @@
+/* controls variables for wireframe */
+:root {
+  --controls-strings-brand-icon: Moja;
+  --controls-strings-brand-illustration: Wireframe;
+  --controls-strings-trust-pilot: Light;
+  --controls-strings-url: brand.com;
+  --controls-strings-cta-log-in: Log in to MyBrand;
+  --controls-strings-icon-size: 24 px;
+  --controls-boolean-appearance-moja-true: false;
+  --controls-boolean-appearance-moja-false: false;
+  --controls-boolean-appearance-bos-true: false;
+  --controls-boolean-appearance-bos-false: true;
+  --controls-boolean-appearance-icon-hide: true;
+  --controls-boolean-logo-moja: false;
+  --controls-boolean-logo-lloyds: false;
+  --controls-boolean-logo-bos: false;
+  --controls-boolean-logo-halifax: false;
+  --controls-boolean-logo-brand: true;
+  --controls-boolean-footer-graphic: false;
+  --controls-boolean-footer-logo-with-tp: false;
+}

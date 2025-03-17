@@ -1,0 +1,7 @@
+/* size variables for bos */
+:root {
+  --size-sm-button-min-height: 48;
+  --size-tile-min-height: 202;
+  --size-helphub-nav-height: 72;
+  --size-border-button-focus: 2;
+}

@@ -1,0 +1,21 @@
+/* controls variables for bos */
+:root {
+  --controls-strings-brand-icon: Lloyds;
+  --controls-strings-brand-illustration: BoS;
+  --controls-strings-trust-pilot: Light;
+  --controls-strings-url: bankofscotland.co.uk;
+  --controls-strings-cta-log-in: Log in to your account;
+  --controls-strings-icon-size: 16 px;
+  --controls-boolean-appearance-moja-true: false;
+  --controls-boolean-appearance-moja-false: true;
+  --controls-boolean-appearance-bos-true: true;
+  --controls-boolean-appearance-bos-false: false;
+  --controls-boolean-appearance-icon-hide: true;
+  --controls-boolean-logo-moja: false;
+  --controls-boolean-logo-lloyds: false;
+  --controls-boolean-logo-bos: true;
+  --controls-boolean-logo-halifax: false;
+  --controls-boolean-logo-brand: false;
+  --controls-boolean-footer-graphic: false;
+  --controls-boolean-footer-logo-with-tp: false;
+}
