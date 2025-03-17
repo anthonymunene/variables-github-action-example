@@ -1,4 +1,4 @@
-import { BRANDS, PLATFORM } from './variables.js'
+import { BRANDS, PLATFORMS } from './variables.js'
 
 export type Brand = typeof BRANDS[number]
-export type Platform = typeof PLATFORM[number]
+export type Platform = typeof PLATFORMS[number]
