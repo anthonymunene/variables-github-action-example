@@ -610,7 +610,7 @@
       "tiles": {
         "min-height": {
           "$type": "number",
-          "$value": "{Ascot.component.tile.size.min-height}",
+          "$value": "{component.tile.size.min-height}",
           "$description": "",
           "$extensions": {
             "com.figma": {
@@ -779,7 +779,7 @@
             "xl": {
               "font-size": {
                 "$type": "number",
-                "$value": "{Ascot.typography.text-style.title.big.font-size}",
+                "$value": "{typography.text-style.title.big.font-size}",
                 "$description": "",
                 "$extensions": {
                   "com.figma": {
@@ -793,7 +793,7 @@
               },
               "line-height": {
                 "$type": "number",
-                "$value": "{Ascot.typography.text-style.title.big.line-height}",
+                "$value": "{typography.text-style.title.big.line-height}",
                 "$description": "",
                 "$extensions": {
                   "com.figma": {
