@@ -3,6 +3,7 @@ import StyleDictionary, { Config } from 'style-dictionary';
 import path,{ basename, resolve, join } from 'path';
 import { fileURLToPath } from 'url';
 import * as fs from 'fs';
+import { TOKENS_DIR } from './src/variables.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -473,7 +474,7 @@ function processAllTokenFiles(tokenDir: string, outputDir: string): void {
 
 // Main function to run the token processor
 function main() {
-  const tokenDir = resolve(__dirname, './tokens_new');
+  const tokenDir = resolve(__dirname, TOKENS_DIR);
   const outputDir = resolve(__dirname, './build');
 
   processAllTokenFiles(tokenDir, outputDir);

@@ -1,4 +1,4 @@
-export const BRANDS = ['halifax', 'lloyds', 'bos', 'moja', 'wireframe'] as const
+export const BRANDS = ['halifax', 'lloyds', 'bos', 'moja'] as const
 export const PLATFORMS = [
   { name: 'css',
     transformGroup: 'css',
@@ -10,4 +10,9 @@ export const PLATFORMS = [
     format: 'javascript/es6',
     fileExtension: "js"
   }] as const
-export const TOKENS_DIR = 'tokens_new'
+export const TOKENS_DIR = 'tokens_v0_sanitised'
+export const BUILD_DIR= "build"
+export const DESIGN_SYSTEM_NAME = "Ascot"
+
+export const EXCLUDED_COLLECTIONS = ["content","System", "comms", "wireframe"]
+export const EXCLUDED_VARIABLE_CATEGORIES = ["comms","system","ascot", "archive", "content"]

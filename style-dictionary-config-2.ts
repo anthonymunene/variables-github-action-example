@@ -3,6 +3,7 @@ import StyleDictionary, {Config} from 'style-dictionary';
 import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url'
+import { BUILD_DIR, DESIGN_SYSTEM_NAME, TOKENS_DIR } from './src/variables.js'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 
@@ -77,7 +78,8 @@ function getBrandFromFilename(filePath: string): string {
 function getCategoriesFromTokenFile(filePath: string): string[] {
   try {
     const fileContent = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-    return Object.keys(fileContent);
+    return fileContent[DESIGN_SYSTEM_NAME] ? Object.keys(fileContent[DESIGN_SYSTEM_NAME]) : []
+    // return Object.keys(fileContent);
   } catch (err) {
     console.error(`Error reading file ${filePath}:`, err);
     return [];
@@ -143,6 +145,9 @@ StyleDictionary.registerFormat({
         const fullVariableName = token.path.join('-')
         if(token.path[0] === "type") {
           const named = fullVariableName
+        }
+        if(token.path[0] === "size") {
+          console.log("just reach")
         }
         const name = `--${toKebabCase(fullVariableName)}`;
         const value = token.$value;
@@ -296,21 +301,36 @@ StyleDictionary.registerFormat({
     return output.join('\n');
   }
 });
-
+function throwSizeError(name, value, unitType) {
+  throw `Invalid Number: '${name}: ${value}' is not a valid number, cannot transform to '${unitType}' \n`;
+}
+const convertToRem = (value, basePixelValue) => `${value/basePixelValue}`
 // Add custom transforms if needed
 StyleDictionary.registerTransform({
-  name: 'size/px',
+  name: 'sizeToRem',
   type: 'value',
+  transitive: true,
   filter: function(token) {
     return (
-      token.$type === 'dimension' ||
-      token.path[0] === 'size' ||
-      token.path[0] === 'spacing'
+      // token.$type === 'dimension' ||
+      token.path[0] === 'size' //||
+      // token.path[0] === 'space' ||
+      // token.path[0] === 'radius' ||
+      // token.path[0] === 'border'
     ) && typeof token.original.$value === 'number';
   },
-  transform: function(token) {
-    return `${token.original.$value}px`;
-  }
+  transform: function (token, config, options) {
+    const nonParsed = options.usesDtcg ? token.$value : token.value;
+    // if the dimension already has a unit (non-digit / . period character)
+    if (`${nonParsed}`.match(/[^0-9.-]+$/)) {
+      return nonParsed;
+    }
+    const parsedVal = parseFloat(nonParsed);
+    if (isNaN(parsedVal)) throwSizeError(token.name, nonParsed, 'rem');
+    if (parsedVal === 0) return Number.isInteger(nonParsed) ? 0 : '0';
+    // const convertedValue = convertToRem(parsedVal, config.basePxFontSize)
+    return (parsedVal/config.basePxFontSize) + 'rem';
+  },
 });
 
 // Get all non-brand JSON files to use as dependencies
@@ -320,6 +340,10 @@ function getDependencyFiles(tokenDir: string): string[] {
     .map(file => path.join(tokenDir, file));
 }
 
+const traverseLevels = (token, config) => {
+  console.log(token)
+  return token
+}
 // Process a single brand's token file
 async function processBrandTokens(brandFilePath: string, dependencies: string[], buildPath: string): void {
   const brand = getBrandFromFilename(brandFilePath);
@@ -346,7 +370,8 @@ async function processBrandTokens(brandFilePath: string, dependencies: string[],
       platforms: {
         css: {
           transformGroup: 'css',
-          transforms: ['size/px'],
+          transforms:['sizeToRem'],
+          basePxFontSize: 16,
           buildPath: `${buildPath}/${brand}/css/`,
           files: [{
             destination: `${category}.css`,
@@ -365,7 +390,7 @@ async function processBrandTokens(brandFilePath: string, dependencies: string[],
           files: [{
             destination: `${category}.js`,
             format: 'javascript/module-by-category',
-            filter: token => token.path[0] === category,
+            filter: token => traverseLevels(token),
             options: {
               category: category,
               brand: brand
@@ -379,7 +404,7 @@ async function processBrandTokens(brandFilePath: string, dependencies: string[],
           files: [{
             destination: `${category}.d.ts`,
             format: 'typescript/declarations-by-category',
-            filter: token => token.path[0] === category,
+            filter: token => traverseLevels(token, config),
             options: {
               category: category,
               brand: brand
@@ -542,7 +567,7 @@ function createRootIndex(brands: string[], buildPath: string): void {
 // Process all token files
 function processAllTokens(tokenDir: string, buildPath: string): void {
   // Get all dependency files (non-brand files)
-  const dependencies = getDependencyFiles(tokenDir);
+
   console.log(`Found ${dependencies.length} dependency files`);
 
   // Get all brand token files
@@ -572,8 +597,8 @@ function processAllTokens(tokenDir: string, buildPath: string): void {
 
 // Main function
 function main() {
-  const tokenDir = path.resolve(__dirname, './tokens_new');
-  const buildPath = path.resolve(__dirname, './build');
+  const tokenDir = path.resolve(__dirname, TOKENS_DIR);
+  const buildPath = path.resolve(__dirname, BUILD_DIR);
 
   processAllTokens(tokenDir, buildPath);
 }

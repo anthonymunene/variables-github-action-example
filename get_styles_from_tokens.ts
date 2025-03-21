@@ -1,11 +1,20 @@
 import { StyleDictionary } from 'style-dictionary-utils'
 import { logBrokenReferenceLevels, logVerbosityLevels, logWarningLevels, formats } from 'style-dictionary/enums'
-import { BRANDS, PLATFORMS } from './src/variables.js'
+import { BRANDS, BUILD_DIR, DESIGN_SYSTEM_NAME, PLATFORMS, TOKENS_DIR } from './src/variables.js'
 import { Brand, Platform } from './src/types.js'
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import tokenFiles from './src/get_token_files.js'
-import { getTokenCategories } from './src/utils.js'
+import {
+  extractBrandName,
+  getBrandFile,
+  getBrandFromFilename,
+  getDependencyFiles,
+  getTokenCategories,
+  isBrandFile,
+} from './src/utils.js'
+import fs from 'fs'
+import { shouldExclude } from './src/token_export.js'
 
 
 // const getTokenFiles = (): string[] => {
@@ -15,6 +24,9 @@ import { getTokenCategories } from './src/utils.js'
 //     .map((file: string) => path.join(tokenDir, file));
 // };
 
+const excludeOtherBrands = (token, options, brand): boolean => {
+  return !token.path.includes("archive?") && token.path[0] === DESIGN_SYSTEM_NAME && token.$type !== "string";
+}
 
 // Get all categories
 const tokenCategories: string[] = getTokenCategories();
@@ -31,6 +43,12 @@ function getFiles(platform, brand) {
 
 // HAVE THE STYLE DICTIONARY CONFIG DYNAMICALLY GENERATED
 function getStyleDictionaryConfig(platform: Platform, brand: Brand) {
+  const brandFiles = fs.readdirSync(TOKENS_DIR)
+    .filter(file => isBrandFile(file))
+    .map(file => path.join(TOKENS_DIR, file));
+  const brandFile = getBrandFile(brand)
+  const dependencies = getDependencyFiles(TOKENS_DIR);
+
   return {
     log: {
       warnings: logWarningLevels.warn, // 'warn' | 'error' | 'disabled'
@@ -39,25 +57,27 @@ function getStyleDictionaryConfig(platform: Platform, brand: Brand) {
         brokenReferences: logBrokenReferenceLevels.throw, // 'throw' | 'console'
       },
     },
-    source: tokenFiles,
+    source: [brandFile],
+    include: dependencies,
+    hooks: {
+      filters: {
+        'filterBrands': (token, options, brand) => {
+          const brandName = extractBrandName(options.source[0])
+          return !token.path.includes("archive?") && token.path[0] !== DESIGN_SYSTEM_NAME && token.$type !== "string";
+        },
+      }
+    },
     platforms: {
-      // js: {
-      //   buildPath: `build/${brand}/js/`,
-      //   transformGroup: 'js',
-      //   files: [
-      //     {
-      //       destination: 'colors.js',
-      //       format: 'javascript/es6',
-      //     },
-      //   ],
-      // },
       [platform.name]: {
-        buildPath: `build/${brand}/${platform.fileExtension}/`,
-        transformGroup: `css`,
+        buildPath: `${BUILD_DIR}/${brand}/${platform.fileExtension}/`,
+        transformGroup: `${platform.transformGroup}`,
         files: [          {
-          destination: 'content.css',
-          format: 'css/variables',
-          filter: 'removeContent'
+          destination: `content.${platform.fileExtension}`,
+          format: `${platform.format}`,
+          options: {
+            outputReferences: true
+          },
+          filter: 'filterBrands'
         },]
       },
     },
@@ -74,13 +94,10 @@ StyleDictionary.registerParser({
   },
 });
 
-StyleDictionary.registerFilter({
-  name: 'removeContent',
-  filter: (token, options): boolean => {
-
-    return token.$type !== "content";
-  }
-});
+// StyleDictionary.registerFilter({
+//   name: 'removeContent',
+//   filter: token => excludeOtherBrands(token,options ,brand)
+// });
 console.log('Build started...')
 
 // PROCESS THE DESIGN TOKENS FOR THE DIFFERENT BRANDS AND PLATFORMS
@@ -90,10 +107,10 @@ try {
       console.log('\n==============================================')
       console.log(`\nProcessing: [${platform.name}] [${brand}]`)
 
-      const myStyleDictionary = new StyleDictionary()
-      const sd = await myStyleDictionary.extend(getStyleDictionaryConfig(platform, brand))
+      const myStyleDictionary = new StyleDictionary(getStyleDictionaryConfig(platform, brand))
+      // const sd = await myStyleDictionary.extend(getStyleDictionaryConfig(platform, brand))
 
-      sd.buildPlatform(platform.name)
+      await myStyleDictionary.buildPlatform(platform.name)
     })
   })
 

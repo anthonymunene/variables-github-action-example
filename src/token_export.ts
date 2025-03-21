@@ -1,6 +1,7 @@
 import { GetLocalVariablesResponse, LocalVariable } from '@figma/rest-api-spec'
 import { rgbToHex } from './color.js'
 import { Token, TokensFile } from './token_types.js'
+import { EXCLUDED_COLLECTIONS, EXCLUDED_VARIABLE_CATEGORIES } from './variables.js'
 
 function tokenTypeFromVariable(variable: LocalVariable) {
   switch (variable.resolvedType) {
@@ -24,6 +25,10 @@ function tokenValueFromVariable(
   if (typeof value === 'object') {
     if ('type' in value && value.type === 'VARIABLE_ALIAS') {
       const aliasedVariable = localVariables[value.id]
+      if(!aliasedVariable) {
+        console.log(aliasedVariable)
+        return "NO_VALUE"
+      }
       return `{${aliasedVariable.name.replace(/\//g, '.')}}`
     } else if ('r' in value) {
       return rgbToHex(value)
@@ -35,6 +40,7 @@ function tokenValueFromVariable(
   }
 }
 
+export const shouldExclude = (targets: string, collection: string[]) => collection.some(excluded_collection => targets.toLowerCase().includes(excluded_collection.toLowerCase()))
 export function tokenFilesFromLocalVariables(localVariablesResponse: GetLocalVariablesResponse) {
   const tokenFiles: { [fileName: string]: TokensFile } = {}
   const localVariableCollections = localVariablesResponse.meta.variableCollections
@@ -51,31 +57,38 @@ export function tokenFilesFromLocalVariables(localVariablesResponse: GetLocalVar
     collection.modes.forEach((mode) => {
       const fileName = `${collection.name}.${mode.name}.json`
 
-      if (!tokenFiles[fileName]) {
-        tokenFiles[fileName] = {}
-      }
 
-      let obj: any = tokenFiles[fileName]
+      if(!shouldExclude(fileName, EXCLUDED_COLLECTIONS)) {
 
-      variable.name.split('/').forEach((groupName) => {
-        obj[groupName] = obj[groupName] || {}
-        obj = obj[groupName]
-      })
+        if (!tokenFiles[fileName]) {
+          tokenFiles[fileName] = {}
+        }
 
-      const token: Token = {
-        $type: tokenTypeFromVariable(variable),
-        $value: tokenValueFromVariable(variable, mode.modeId, localVariables),
-        $description: variable.description,
-        $extensions: {
-          'com.figma': {
-            hiddenFromPublishing: variable.hiddenFromPublishing,
-            scopes: variable.scopes,
-            codeSyntax: variable.codeSyntax,
+        let obj: any = tokenFiles[fileName]
+
+        if (shouldExclude(variable.name, EXCLUDED_VARIABLE_CATEGORIES)) {
+          return
+        }
+        variable.name.split('/').forEach((groupName) => {
+          obj[groupName] = obj[groupName] || {}
+          obj = obj[groupName]
+        })
+
+        const token: Token = {
+          $type: tokenTypeFromVariable(variable),
+          $value: tokenValueFromVariable(variable, mode.modeId, localVariables),
+          $description: variable.description,
+          $extensions: {
+            'com.figma': {
+              hiddenFromPublishing: variable.hiddenFromPublishing,
+              scopes: variable.scopes,
+              codeSyntax: variable.codeSyntax,
+            },
           },
-        },
-      }
+        }
 
-      Object.assign(obj, token)
+        Object.assign(obj, token)
+      }
     })
   })
 

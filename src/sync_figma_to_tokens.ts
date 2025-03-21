@@ -5,6 +5,7 @@ import FigmaApi from './figma_api.js'
 
 import { green } from './utils.js'
 import { tokenFilesFromLocalVariables } from './token_export.js'
+import { TOKENS_DIR } from './variables.js'
 
 /**
  * Usage:
@@ -27,7 +28,7 @@ async function main() {
 
   const tokensFiles = tokenFilesFromLocalVariables(localVariables)
 
-  let outputDir = 'tokens_new'
+  let outputDir = TOKENS_DIR
   const outputArgIdx = process.argv.indexOf('--output')
   if (outputArgIdx !== -1) {
     outputDir = process.argv[outputArgIdx + 1]
