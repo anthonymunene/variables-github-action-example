@@ -13,6 +13,7 @@ export const PLATFORMS = [
 export const TOKENS_DIR = './src/tokens'
 export const BUILD_DIR= "build"
 export const DESIGN_SYSTEM_NAME = "Ascot"
+export const BASE_FONT_SIZE = 16
 
 export const EXCLUDED_COLLECTIONS = ["content","System", "comms", "wireframe"]
 export const EXCLUDED_VARIABLE_CATEGORIES = ["comms","system","ascot", "archive", "content"]
