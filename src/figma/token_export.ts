@@ -1,7 +1,7 @@
-import { GetLocalVariablesResponse, LocalVariable } from '@figma/rest-api-spec'
-import { rgbToHex } from './color.js'
-import { Token, TokensFile } from './token_types.js'
-import { EXCLUDED_COLLECTIONS, EXCLUDED_VARIABLE_CATEGORIES } from './variables.js'
+import type { GetLocalVariablesResponse, LocalVariable } from '@figma/rest-api-spec'
+import { rgbToHex } from './utils/index.js'
+import  type { Token, TokensFile } from './types.js'
+import {EXCLUDED_COLLECTIONS} from '../variables.js'
 
 function tokenTypeFromVariable(variable: LocalVariable) {
   switch (variable.resolvedType) {
@@ -25,9 +25,9 @@ function tokenValueFromVariable(
   if (typeof value === 'object') {
     if ('type' in value && value.type === 'VARIABLE_ALIAS') {
       const aliasedVariable = localVariables[value.id]
-      if(!aliasedVariable) {
+      if (!aliasedVariable) {
         console.log(aliasedVariable)
-        return "NO_VALUE"
+        return 'NO_VALUE'
       }
       return `{${aliasedVariable.name.replace(/\//g, '.')}}`
     } else if ('r' in value) {
@@ -41,6 +41,7 @@ function tokenValueFromVariable(
 }
 
 export const shouldExclude = (targets: string, collection: string[]) => collection.some(excluded_collection => targets.toLowerCase().includes(excluded_collection.toLowerCase()))
+
 export function tokenFilesFromLocalVariables(localVariablesResponse: GetLocalVariablesResponse) {
   const tokenFiles: { [fileName: string]: TokensFile } = {}
   const localVariableCollections = localVariablesResponse.meta.variableCollections
@@ -58,7 +59,7 @@ export function tokenFilesFromLocalVariables(localVariablesResponse: GetLocalVar
       const fileName = `${collection.name}.${mode.name}.json`
 
 
-      if(!shouldExclude(fileName, EXCLUDED_COLLECTIONS)) {
+      if (!shouldExclude(fileName, EXCLUDED_COLLECTIONS)) {
 
         if (!tokenFiles[fileName]) {
           tokenFiles[fileName] = {}
@@ -66,9 +67,9 @@ export function tokenFilesFromLocalVariables(localVariablesResponse: GetLocalVar
 
         let obj: any = tokenFiles[fileName]
 
-        if (shouldExclude(variable.name, EXCLUDED_VARIABLE_CATEGORIES)) {
-          return
-        }
+        // if (shouldExclude(variable.name, EXCLUDED_VARIABLE_CATEGORIES)) {
+        //   return
+        // }
         variable.name.split('/').forEach((groupName) => {
           obj[groupName] = obj[groupName] || {}
           obj = obj[groupName]

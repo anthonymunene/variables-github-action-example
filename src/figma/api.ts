@@ -12,10 +12,19 @@ export default class FigmaApi {
   constructor(token: string) {
     this.token = token
   }
-
-  async getLocalVariables(fileKey: string) {
+  async getBranches(fileKey:string) {
     const resp = await axios.request<GetLocalVariablesResponse>({
-      url: `${this.baseUrl}/v1/files/${fileKey}/variables/local`,
+      url: `${this.baseUrl}/v1/files/${fileKey}?branch_data=true`,
+      headers: {
+        Accept: '*/*',
+        'X-Figma-Token': this.token,
+      },
+    })
+    return resp.data
+  }
+  async getLocalVariables(fileKey:string) {
+    const resp = await axios.request<GetLocalVariablesResponse>({
+      url: `${this.baseUrl}/v1/files/${fileKey}/variables/local?branch_data=true`,
       headers: {
         Accept: '*/*',
         'X-Figma-Token': this.token,

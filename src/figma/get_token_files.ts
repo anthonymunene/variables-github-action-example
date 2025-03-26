@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { TOKENS_DIR } from './variables.js'
+import { TOKENS_DIR } from '../variables.js'
 
 /**
  * Gets all filenames from a directory recursively
