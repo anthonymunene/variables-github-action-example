@@ -461,7 +461,7 @@
       "primary": {
         "default": {
           "$type": "color",
-          "$value": "{Bos.colour.primary.primary-2}",
+          "$value": "{Halifax.colour.primary.primary-2}",
           "$description": "",
           "$extensions": {
             "com.figma": {
@@ -801,7 +801,7 @@
         },
         "hover": {
           "$type": "color",
-          "$value": "{Bos.colour.primary.primary-3}",
+          "$value": "{Halifax.colour.primary.primary-3}",
           "$description": "",
           "$extensions": {
             "com.figma": {
@@ -1173,8 +1173,8 @@
       "support": {
         "info-dim": {
           "$type": "color",
-          "$value": "{Bos.colour.blue.100}",
-          "$description": "",
+          "$value": "{Halifax.colour.blue.100}",
+          "$description": "this comes through as BOS",
           "$extensions": {
             "com.figma": {
               "hiddenFromPublishing": false,
@@ -2188,7 +2188,7 @@
             },
             "inverse": {
               "$type": "color",
-              "$value": "{Bos.colour.neutral.white}",
+              "$value": "{Halifax.colour.neutrals.white}",
               "$description": "",
               "$extensions": {
                 "com.figma": {
