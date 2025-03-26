@@ -10,7 +10,7 @@ export const PLATFORMS = [
     format: 'javascript/es6',
     fileExtension: "js"
   }] as const
-export const TOKENS_DIR = 'tokens_v0_sanitised'
+export const TOKENS_DIR = './src/tokens'
 export const BUILD_DIR= "build"
 export const DESIGN_SYSTEM_NAME = "Ascot"
 
