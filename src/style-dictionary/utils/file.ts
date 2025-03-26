@@ -30,13 +30,6 @@ export function getThemeFromFileName(filePath: string): string {
     return match[1].toLowerCase()
   }
 
-  // // Fallback for other formats
-  // for (const brand of BRANDS) {
-  //   if (fileName.toLowerCase().includes(brand)) {
-  //     return brand;
-  //   }
-  // }
-
   return 'default'
 }
 
