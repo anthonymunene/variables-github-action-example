@@ -1,6 +1,4 @@
 import 'dotenv/config'
-import * as fs from 'fs'
-
 import FigmaApi from './api.js'
 
 import { green } from './utils/index.js'
