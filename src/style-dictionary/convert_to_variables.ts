@@ -18,6 +18,7 @@ import {
 } from './formatters/index.js'
 import { logBrokenReferenceLevels, logVerbosityLevels, logWarningLevels } from 'style-dictionary/enums'
 import { sizeToRem } from './transformers/index.js'
+import { getFilesFromDirectory } from '../shared/utils/index.js'
 
 
 // Register custom formats for Style Dictionary
@@ -108,10 +109,8 @@ async function processThemeTokens(theme: string, themeFilePath: string, dependen
 async function processAllTokens(tokenDir: string, buildPath: string): Promise<void> {
 
 
-  const themeFiles = fs.readdirSync(tokenDir)
+  const themeFiles = getFilesFromDirectory(tokenDir)
     .filter(file => isThemeFile(file))
-    .map(file => path.join(tokenDir, file))
-
   const processedThemes: string[] = []
 
   await Promise.all(
