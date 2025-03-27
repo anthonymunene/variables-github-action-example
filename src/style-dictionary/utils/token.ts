@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { toKebabCase } from './string_formatters.js'
+import { toKebabCase } from './stringFormatters.js'
 import path from 'path'
 import { PlatformConfig, TransformedToken } from 'style-dictionary/types'
 import { Config } from 'style-dictionary'

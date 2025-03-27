@@ -1,4 +1,4 @@
-import { toCamelCase, toKebabCase, toPascalCase } from '../utils/string_formatters.js'
+import { toCamelCase, toKebabCase, toPascalCase } from '../utils/stringFormatters.js'
 import type { TransformedToken } from 'style-dictionary/types'
 
 export const formatJSVariablesByCategory = {

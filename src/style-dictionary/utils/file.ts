@@ -1,7 +1,7 @@
 import fs from 'fs'
 import { TOKENS_DIR } from '../../variables.js'
 import path from 'path'
-import { toCamelCase, toPascalCase } from './string_formatters.js'
+import { toCamelCase, toPascalCase } from './stringFormatters.js'
 import { getFilesFromDirectory } from '../../shared/utils/index.js'
 
 const createCoreFileRegex = (theme: string) => {
