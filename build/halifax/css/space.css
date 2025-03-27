@@ -1,0 +1,7 @@
+/* space variables for halifax */
+:root {
+--space-sm: 1.000rem;
+--space-md: 1.500rem;
+--space-lg: 2.000rem;
+--space-title: 1.000rem;
+}
