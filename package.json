@@ -3,9 +3,9 @@
   "type": "module",
   "scripts": {
     "prettier:check": "prettier --check src/",
-    "export_from_figma": "tsx src/figma/figma_export.ts",
+    "export_from_figma": "tsx src/figma/figmaExport.ts",
     "test": "jest",
-    "generate-styles": "tsx src/style-dictionary/convert_to_variables.ts"
+    "generate-styles": "tsx src/style-dictionary/convertToVariables.ts"
   },
   "dependencies": {
     "axios": "^1.6.0",
