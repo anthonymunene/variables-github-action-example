@@ -36,7 +36,7 @@ function getFilesFromDirectory(directoryPath: string): string[] {
 
 
 // Get all filenames
-const tokenFiles: string[] = getFilesFromDirectory(TOKENS_DIR).filter(tokenFile => tokenFile.includes('.json'));
+const tokenFiles: string[] = getFilesFromDirectory(TOKENS_DIR).filter(tokenFile => tokenFile.endsWith('.json'));
 
 // Export the array
 export default tokenFiles;
