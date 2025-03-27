@@ -2,7 +2,7 @@ import 'dotenv/config'
 import FigmaApi from './api.js'
 
 import { green } from './utils/index.js'
-import { tokenFilesFromLocalVariables } from './token_export.js'
+import { saveTokenFiles, tokenFilesFromLocalVariables } from './token_export.js'
 import { TOKENS_DIR } from '../variables.js'
 
 /**
