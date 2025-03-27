@@ -38,10 +38,4 @@ async function main() {
 
   console.log(green(`✅ Tokens files have been written to the ${outputDir} directory`))
 }
-
-const sanitizeFilename = (filename: string) => {
-  return  filename.replace(/\s+/g, '')
-    .replace(/\//g, '-')
-    .toLowerCase()
-}
 main()
