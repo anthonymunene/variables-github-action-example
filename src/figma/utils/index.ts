@@ -25,5 +25,17 @@ export function rgbToHex({ r, g, b, ...rest }: RGB | RGBA) {
   return `#${hex}` + (a !== 1 ? toHex(a) : '')
 }
 
+export const getTokenCategory = (fileName: string): string => {
+  if (fileName.startsWith('theme.')) {
+    return 'themes'
+  } else if (fileName.startsWith('core') || fileName.startsWith('global')) {
+    return 'core'
+  } else if (fileName.startsWith('responsive.')) {
+    return 'responsive'
+  } else {
+    return 'misc' // For any uncategorized tokens
+  }
+}
+
 
 
