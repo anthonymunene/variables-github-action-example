@@ -1,7 +1,10 @@
 import type { GetLocalVariablesResponse, LocalVariable } from '@figma/rest-api-spec'
-import { rgbToHex } from './utils/index.js'
+import { getTokenCategory, rgbToHex } from './utils/index.js'
 import  type { Token, TokensFile } from './types.js'
-import {EXCLUDED_COLLECTIONS} from '../variables.js'
+import { EXCLUDED_COLLECTIONS, TOKENS_DIR } from '../variables.js'
+import path from 'path'
+import { ensureDirectoryExists, sanitizeFilename } from '../shared/utils/index.js'
+import fs from 'fs'
 
 function tokenTypeFromVariable(variable: LocalVariable) {
   switch (variable.resolvedType) {
@@ -56,16 +59,18 @@ export function tokenFilesFromLocalVariables(localVariablesResponse: GetLocalVar
     const collection = localVariableCollections[variable.variableCollectionId]
 
     collection.modes.forEach((mode) => {
-      const fileName = `${collection.name}.${mode.name}.json`
+
+      const baseFileName = sanitizeFilename(`${collection.name}.${mode.name}.json`)
 
 
-      if (!shouldExclude(fileName, EXCLUDED_COLLECTIONS)) {
-
-        if (!tokenFiles[fileName]) {
-          tokenFiles[fileName] = {}
+      if (!shouldExclude(baseFileName, EXCLUDED_COLLECTIONS)) {
+        const category = getTokenCategory(baseFileName)
+        const filePath = `${category}/${baseFileName}`
+        if (!tokenFiles[filePath]) {
+          tokenFiles[filePath] = {}
         }
 
-        let obj: any = tokenFiles[fileName]
+        let obj: any = tokenFiles[filePath]
 
         // if (shouldExclude(variable.name, EXCLUDED_VARIABLE_CATEGORIES)) {
         //   return
@@ -94,4 +99,22 @@ export function tokenFilesFromLocalVariables(localVariablesResponse: GetLocalVar
   })
 
   return tokenFiles
+}
+
+export function saveTokenFiles(tokenFiles: { [fileName: string]: TokensFile }, baseDir: string = TOKENS_DIR): void {
+  for (const filePath in tokenFiles) {
+    const fullPath = path.join(baseDir, filePath)
+    const directory = path.dirname(fullPath)
+
+    // Ensure the directory structure exists
+    ensureDirectoryExists(directory)
+
+    // Write the token file
+    fs.writeFileSync(
+      fullPath,
+      JSON.stringify(tokenFiles[filePath], null, 2)
+    )
+
+    console.log(`Token file saved to: ${fullPath}`)
+  }
 }
