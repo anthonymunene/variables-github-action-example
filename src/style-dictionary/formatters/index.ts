@@ -1,9 +1,9 @@
 import { toCamelCase, toKebabCase, toPascalCase } from '../utils/string_formatters.js'
-import type { Dictionary, TransformedToken } from 'style-dictionary/types'
+import type { TransformedToken } from 'style-dictionary/types'
 
 export const formatJSVariablesByCategory = {
   name: 'javascript/module-by-category',
-  format: function({ dictionary, options } ) {
+  format: function({ dictionary, options }) {
     const category = options.category
     const tokens: TransformedToken = dictionary.allTokens
 
