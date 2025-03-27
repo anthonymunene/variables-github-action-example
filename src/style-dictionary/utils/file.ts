@@ -4,15 +4,6 @@ import path from 'path'
 import { toCamelCase, toPascalCase } from './stringFormatters.js'
 import { getFilesFromDirectory } from '../../shared/utils/index.js'
 
-const createCoreFileRegex = (theme: string) => {
-  // Escape any special regex characters in the brand name
-  const escapedBrandName = theme.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-
-  return new RegExp(`src\\\/([a-z]+)\\\/core\\\/((core${escapedBrandName}+|global)\\.mode1\\.json)$`, '')
-}
-
-const createResponsiveFileRegex = () => new RegExp('(^|/)responsive\\.(desktop|mobile)\\.json$')
-
 const createThemeFileRegex = () => new RegExp('theme\.([a-zA-Z0-9]+)\.json$')
 
 export function getThemeFromFileName(filePath: string): string {
@@ -28,10 +19,11 @@ export function getThemeFromFileName(filePath: string): string {
 }
 
 export function getDependencyFiles(theme: string): string[] {
-  const isCore = (file: string) => createCoreFileRegex(theme).test(file)
-  const isResponsive = (file: string) => createResponsiveFileRegex().test(file)
+  const isCore = (file: string) => file.includes(theme) && file.includes("core")
+  const isGlobal = (file: string) => file.includes("global")
+  const isResponsive = (file: string) => file.includes("responsive")
   return getFilesFromDirectory(TOKENS_DIR)
-    .filter(file => file.endsWith('.json') && (isCore(file)) || isResponsive(file))
+    .filter(file => file.endsWith('.json') && (isCore(file)) || isResponsive(file) || isGlobal(file))
 }
 
 
