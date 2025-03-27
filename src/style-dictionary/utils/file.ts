@@ -2,24 +2,18 @@ import fs from 'fs'
 import { TOKENS_DIR } from '../../variables.js'
 import path from 'path'
 import { toCamelCase, toPascalCase } from './string_formatters.js'
+import { getFilesFromDirectory } from '../../shared/utils/index.js'
 
-const createCoreFileRegex = () => {
+const createCoreFileRegex = (theme: string) => {
   // Escape any special regex characters in the brand name
-  //const escapedBrandName = brandName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const escapedBrandName = theme.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 
-  // Create a regex that matches 'core{brandName}.mode1.json'
-  return new RegExp(`^global\\.mode1\\.json$`)
+  return new RegExp(`src\\\/([a-z]+)\\\/core\\\/((core${escapedBrandName}+|global)\\.mode1\\.json)$`, '')
 }
 
-const createResponsiveFileRegex = () => {
-  // Escape any special regex characters in the brand name
+const createResponsiveFileRegex = () => new RegExp('(^|/)responsive\\.(desktop|mobile)\\.json$')
 
-  return new RegExp('^responsive\\.(desktop|mobile)\\.json$')
-}
-
-const createThemeFileRegex = () => {
-  return new RegExp('^theme\.([a-zA-Z0-9]+)\.json$')
-}
+const createThemeFileRegex = () => new RegExp('theme\.([a-zA-Z0-9]+)\.json$')
 
 export function getThemeFromFileName(filePath: string): string {
   const fileName = path.basename(filePath)
@@ -30,15 +24,14 @@ export function getThemeFromFileName(filePath: string): string {
     return match[1].toLowerCase()
   }
 
-  return 'default'
+  return 'no match'
 }
 
 export function getDependencyFiles(theme: string): string[] {
-  const coreFilesRegex = createCoreFileRegex()
-  const responsiveFilesRegex = createResponsiveFileRegex()
-  return fs.readdirSync(TOKENS_DIR)
-    .filter(file => file.endsWith('.json') && (coreFilesRegex.test(file) || responsiveFilesRegex.test(file)))
-    .map(file => path.join(TOKENS_DIR, file))
+  const isCore = (file: string) => createCoreFileRegex(theme).test(file)
+  const isResponsive = (file: string) => createResponsiveFileRegex().test(file)
+  return getFilesFromDirectory(TOKENS_DIR)
+    .filter(file => file.endsWith('.json') && (isCore(file)) || isResponsive(file))
 }
 
 
@@ -187,5 +180,3 @@ export const createRootIndex = (brands: string[], buildPath: string) => {
     tsIndexContent,
   )
 }
-
-// export const
