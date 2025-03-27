@@ -34,15 +34,7 @@ async function main() {
     outputDir = process.argv[outputArgIdx + 1]
   }
 
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir)
-  }
-
-  Object.entries(tokensFiles).forEach(([fileName, fileContent]) => {
-    const sanitisedFileName = sanitizeFilename(fileName)
-    fs.writeFileSync(`${outputDir}/${sanitisedFileName}`, JSON.stringify(fileContent, null, 2))
-    console.log(`Wrote ${sanitisedFileName}`)
-  })
+  saveTokenFiles(tokensFiles, outputDir)
 
   console.log(green(`✅ Tokens files have been written to the ${outputDir} directory`))
 }
