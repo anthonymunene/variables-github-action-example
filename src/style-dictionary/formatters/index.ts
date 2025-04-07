@@ -96,7 +96,7 @@ export const formatCSSVariablesByCategory = {
 
     const filteredTokens = tokens.filter(token => {
 
-      return token.path[0] === category
+      return token.path[0] === category && token.$value !== "NO_VALUE"
     }).map(token => {
       const name = `--${toKebabCase(token.name)}`
       const value = token.$value
