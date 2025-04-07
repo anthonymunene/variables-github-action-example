@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { TOKENS_DIR } from '../../variables.js'
+import { TOKENS_DIR, VARIABLE_COLLECTIONS } from '../../variables.js'
 import path from 'path'
 import { toCamelCase, toPascalCase } from './stringFormatters.js'
 import { getFilesFromDirectory } from '../../shared/utils/index.js'
@@ -19,11 +19,11 @@ export function getThemeFromFileName(filePath: string): string {
 }
 
 export function getDependencyFiles(theme: string): string[] {
-  const isCore = (file: string) => file.includes(theme) && file.includes("core")
-  const isGlobal = (file: string) => file.includes("global")
-  const isResponsive = (file: string) => file.includes("responsive")
-  return getFilesFromDirectory(TOKENS_DIR)
-    .filter(file => file.endsWith('.json') && (isCore(file)) || isResponsive(file) || isGlobal(file))
+  return getFilesFromDirectory(TOKENS_DIR).filter(
+    (file) =>
+      file.endsWith('.json') &&
+      (file.includes(VARIABLE_COLLECTIONS.core) || file.includes(VARIABLE_COLLECTIONS.layout)),
+  )
 }
 
 
