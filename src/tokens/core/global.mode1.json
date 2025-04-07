@@ -1052,7 +1052,7 @@
     },
     "font": {
       "family": {
-        "Heading": {
+        "primary": {
           "$type": "string",
           "$value": "Bebas Neue",
           "$description": "",
@@ -1064,7 +1064,7 @@
             }
           }
         },
-        "Text": {
+        "secondary": {
           "$type": "string",
           "$value": "Lato",
           "$description": "",
@@ -1392,7 +1392,7 @@
         },
         "grey-500": {
           "$type": "color",
-          "$value": "#323232",
+          "$value": "#323233",
           "$description": "",
           "$extensions": {
             "com.figma": {
