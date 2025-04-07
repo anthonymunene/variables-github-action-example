@@ -10,7 +10,7 @@ import {
   getThemeFromFileName,
   isThemeFile,
 } from './utils/file.js'
-import { getCategoriesFromTokenFile } from './utils/token.js'
+import { getCategoriesFromTokenFile, removeExcludedCategories } from './utils/token.js';
 import {
   formatCSSVariablesByCategory,
   formatJSVariablesByCategory,
@@ -35,7 +35,7 @@ async function processThemeTokens(theme: string, themeFilePath: string, dependen
   console.log(`Processing ${theme} from ${themeFilePath}`)
 
   // Get all categories from token file
-  const categories = getCategoriesFromTokenFile(themeFilePath)
+  const categories = removeExcludedCategories(getCategoriesFromTokenFile(themeFilePath))
   console.log(`Found categories: ${categories.join(', ')}`)
 
   // Create directories for this theme
