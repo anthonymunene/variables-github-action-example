@@ -17,3 +17,9 @@ export const BASE_FONT_SIZE = 16
 
 export const EXCLUDED_COLLECTIONS = ["content","System", "comms", "wireframe"]
 export const EXCLUDED_VARIABLE_CATEGORIES = ["comms","system","ascot", "archive", "content"]
+
+export const VARIABLE_COLLECTIONS = {
+  core: "global",
+  theme: "theme",
+  layout: "screen"
+}
