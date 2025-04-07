@@ -20,7 +20,9 @@ export const getFilesFromDirectory = (directoryPath: string): string[] => {
 
     const fileArray = files
       .map(file => {
-        const filePath = path.join(directoryPath, file)
+        const resolvedPath = path.resolve(directoryPath, file)
+        const normalisedPath = path.normalize(resolvedPath)
+        const filePath = normalisedPath.replace(/\\/g, '/')
         const stats = fs.statSync(filePath)
 
         if (stats.isDirectory()) {

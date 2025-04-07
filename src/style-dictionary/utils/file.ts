@@ -4,7 +4,7 @@ import path from 'path'
 import { toCamelCase, toPascalCase } from './stringFormatters.js'
 import { getFilesFromDirectory } from '../../shared/utils/index.js'
 
-const createThemeFileRegex = () => new RegExp('theme\.([a-zA-Z0-9]+)\.json$')
+const createThemeFileRegex = () => new RegExp('theme.([a-zA-Z0-9]+).json$')
 
 export function getThemeFromFileName(filePath: string): string {
   const fileName = path.basename(filePath)
@@ -26,7 +26,6 @@ export function getDependencyFiles(theme: string): string[] {
   )
 }
 
-
 // Check if a file is a brand file (brands.brandname.json)
 export function isThemeFile(filePath: string): boolean {
   const fileName = path.basename(filePath)
@@ -34,11 +33,11 @@ export function isThemeFile(filePath: string): boolean {
 }
 
 export const getBrandFile = (brand: string) => {
-  return fs.readdirSync(TOKENS_DIR)
-    .filter(file => file.endsWith('.json') && isThemeFile(file) && file.includes(brand))
-    .map(file => path.join(TOKENS_DIR, file))
+  return fs
+    .readdirSync(TOKENS_DIR)
+    .filter((file) => file.endsWith('.json') && isThemeFile(file) && file.includes(brand))
+    .map((file) => path.join(TOKENS_DIR, file))
 }
-
 
 export const extractBrandName = (filename: string) => {
   // Using a regex pattern to match "theme.BRANDNAME.json"
@@ -58,23 +57,18 @@ export const createIndexFiles = (brand: string, categories: string[], buildPath:
   const cssIndexContent = [
     `/* ${brand} token variables */`,
     '',
-    ...categories.map(category => `@import './${category}.css';`),
+    ...categories.map((category) => `@import './${category}.css';`),
     '',
   ].join('\n')
 
-  fs.writeFileSync(
-    path.join(buildPath, brand, 'css', 'index.css'),
-    cssIndexContent,
-  )
+  fs.writeFileSync(path.join(buildPath, brand, 'css', 'index.css'), cssIndexContent)
 
   // Create JS index file
   const jsImports = categories.map(
-    category => `import { ${toCamelCase(category)}Tokens } from './${category}';`,
+    (category) => `import { ${toCamelCase(category)}Tokens } from './${category}';`,
   )
 
-  const jsExports = categories.map(
-    category => `  ${toCamelCase(category)}Tokens`,
-  )
+  const jsExports = categories.map((category) => `  ${toCamelCase(category)}Tokens`)
 
   const jsIndexContent = [
     `// ${brand} tokens index`,
@@ -87,19 +81,14 @@ export const createIndexFiles = (brand: string, categories: string[], buildPath:
     '',
   ].join('\n')
 
-  fs.writeFileSync(
-    path.join(buildPath, brand, 'js', 'index.js'),
-    jsIndexContent,
-  )
+  fs.writeFileSync(path.join(buildPath, brand, 'js', 'index.js'), jsIndexContent)
 
   // Create TypeScript definition index file
   const tsImports = categories.map(
-    category => `import { ${toPascalCase(category)}Tokens } from './${category}';`,
+    (category) => `import { ${toPascalCase(category)}Tokens } from './${category}';`,
   )
 
-  const tsExports = categories.map(
-    category => `  ${toPascalCase(category)}Tokens`,
-  )
+  const tsExports = categories.map((category) => `  ${toPascalCase(category)}Tokens`)
 
   const tsIndexContent = [
     `// ${brand} tokens type definitions`,
@@ -112,10 +101,7 @@ export const createIndexFiles = (brand: string, categories: string[], buildPath:
     '',
   ].join('\n')
 
-  fs.writeFileSync(
-    path.join(buildPath, brand, 'js', 'index.d.ts'),
-    tsIndexContent,
-  )
+  fs.writeFileSync(path.join(buildPath, brand, 'js', 'index.d.ts'), tsIndexContent)
 }
 
 // Create a root index that imports from all brands
@@ -124,12 +110,10 @@ export const createRootIndex = (brands: string[], buildPath: string) => {
   fs.mkdirSync(rootJsDir, { recursive: true })
 
   const jsImports = brands.map(
-    brand => `import * as ${toCamelCase(brand)}Tokens from '../${brand}/js/index';`,
+    (brand) => `import * as ${toCamelCase(brand)}Tokens from '../${brand}/js/index';`,
   )
 
-  const jsExports = brands.map(
-    brand => `  ${toCamelCase(brand)}Tokens`,
-  )
+  const jsExports = brands.map((brand) => `  ${toCamelCase(brand)}Tokens`)
 
   const jsIndexContent = [
     '// All brand tokens',
@@ -142,19 +126,14 @@ export const createRootIndex = (brands: string[], buildPath: string) => {
     '',
   ].join('\n')
 
-  fs.writeFileSync(
-    path.join(rootJsDir, 'index.js'),
-    jsIndexContent,
-  )
+  fs.writeFileSync(path.join(rootJsDir, 'index.js'), jsIndexContent)
 
   // Create TypeScript definition for root index
   const tsImports = brands.map(
-    brand => `import * as ${toCamelCase(brand)}Tokens from '../${brand}/js/index';`,
+    (brand) => `import * as ${toCamelCase(brand)}Tokens from '../${brand}/js/index';`,
   )
 
-  const tsExports = brands.map(
-    brand => `  ${toCamelCase(brand)}Tokens`,
-  )
+  const tsExports = brands.map((brand) => `  ${toCamelCase(brand)}Tokens`)
 
   const tsIndexContent = [
     '// All brand tokens type definitions',
@@ -167,8 +146,5 @@ export const createRootIndex = (brands: string[], buildPath: string) => {
     '',
   ].join('\n')
 
-  fs.writeFileSync(
-    path.join(rootJsDir, 'index.d.ts'),
-    tsIndexContent,
-  )
+  fs.writeFileSync(path.join(rootJsDir, 'index.d.ts'), tsIndexContent)
 }
