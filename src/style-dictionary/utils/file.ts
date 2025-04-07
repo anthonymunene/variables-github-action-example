@@ -17,7 +17,7 @@ export function getThemeFromFileName(filePath: string): string {
   return 'no match'
 }
 
-export function getDependencyFiles(theme: string): string[] {
+export function getDependencyFiles(): string[] {
   return getFilesFromDirectory(TOKENS_DIR).filter(
     (file) =>
       file.endsWith('.json') &&
