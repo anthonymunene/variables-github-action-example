@@ -3,14 +3,9 @@ import { StyleDictionary } from 'style-dictionary-utils'
 import * as fs from 'fs'
 import * as path from 'path'
 import { BASE_FONT_SIZE, BUILD_DIR, TOKENS_DIR } from '../variables.js'
-import {
-  createIndexFiles,
-  createRootIndex,
-  getDependencyFiles,
-  getThemeFromFileName,
-  isThemeFile,
-} from './utils/file.js'
-import { getCategoriesFromTokenFile, removeExcludedCategories } from './utils/token.js';
+import { getDependencyFiles, getThemeFromFileName, isThemeFile } from './utils/file.js'
+import { createIndexFiles, createRootIndex } from './utils/indexFiles.js'
+import { getCategoriesFromTokenFile, removeExcludedCategories } from './utils/token.js'
 import {
   formatCSSVariablesByCategory,
   formatJSVariablesByCategory,
@@ -116,7 +111,7 @@ async function processAllTokens(tokenDir: string, buildPath: string): Promise<vo
   await Promise.all(
     themeFiles.map(async themeFile => {
       const theme = getThemeFromFileName(themeFile)
-      const dependencies = getDependencyFiles(theme)
+      const dependencies = getDependencyFiles()
       console.log(`Found ${dependencies.length} dependency files for ${theme}`)
       await processThemeTokens(theme, themeFile, dependencies, buildPath)
       if (!processedThemes.includes(theme)) {
