@@ -3,6 +3,7 @@ import { toKebabCase } from './stringFormatters.js'
 import path from 'path'
 import { PlatformConfig, TransformedToken } from 'style-dictionary/types'
 import { Config } from 'style-dictionary'
+import { EXCLUDED_VARIABLE_CATEGORIES } from '../../variables.js';
 
 export const getCategoriesFromTokenFile = (filePath: string) => {
   try {
@@ -13,6 +14,8 @@ export const getCategoriesFromTokenFile = (filePath: string) => {
     return []
   }
 }
+
+export const removeExcludedCategories = (categories: string[]) => categories.filter(category => !EXCLUDED_VARIABLE_CATEGORIES.includes(category.toLowerCase()))
 
 // Process content category into a separate JSON file
 export const  processContentTokens = (dictionary: any, brand: string, buildPath: string) => {
