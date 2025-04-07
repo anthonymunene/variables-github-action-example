@@ -1,7 +1,6 @@
 import fs from 'fs'
 import { TOKENS_DIR, VARIABLE_COLLECTIONS } from '../../variables.js'
 import path from 'path'
-import { toCamelCase, toPascalCase } from './stringFormatters.js'
 import { getFilesFromDirectory } from '../../shared/utils/index.js'
 
 const createThemeFileRegex = () => new RegExp('theme.([a-zA-Z0-9]+).json$')
