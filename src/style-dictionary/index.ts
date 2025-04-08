@@ -9,7 +9,6 @@ import { getCategoriesFromTokenFile, removeExcludedCategories } from './utils/to
 import {
   formatCSSVariablesByCategory,
   formatJSVariablesByCategory,
-  formatTypeScriptDeclerationsByCategory,
 } from './formatters/index.js'
 import { logBrokenReferenceLevels, logVerbosityLevels, logWarningLevels } from 'style-dictionary/enums'
 import { sizeToRem } from './transformers/index.js'
@@ -20,8 +19,6 @@ import { getFilesFromDirectory } from '../shared/utils/index.js'
 StyleDictionary.registerFormat(formatCSSVariablesByCategory)
 
 StyleDictionary.registerFormat(formatJSVariablesByCategory)
-
-StyleDictionary.registerFormat(formatTypeScriptDeclerationsByCategory)
 
 StyleDictionary.registerTransform(sizeToRem)
 
