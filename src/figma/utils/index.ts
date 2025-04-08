@@ -1,4 +1,5 @@
 import { RGB, RGBA } from '@figma/rest-api-spec'
+import { VARIABLE_COLLECTIONS } from '../../variables.js'
 
 export function green(msg: string) {
 
@@ -26,12 +27,12 @@ export function rgbToHex({ r, g, b, ...rest }: RGB | RGBA) {
 }
 
 export const getTokenCategory = (fileName: string): string => {
-  if (fileName.startsWith('theme.')) {
-    return 'themes'
-  } else if (fileName.startsWith('core') || fileName.startsWith('global')) {
-    return 'core'
-  } else if (fileName.startsWith('responsive.')) {
-    return 'responsive'
+  if (fileName.startsWith(VARIABLE_COLLECTIONS.theme)) {
+    return VARIABLE_COLLECTIONS.theme
+  } else if (fileName.startsWith(VARIABLE_COLLECTIONS.core)) {
+    return VARIABLE_COLLECTIONS.core
+  } else if (fileName.startsWith(VARIABLE_COLLECTIONS.layout)) {
+    return VARIABLE_COLLECTIONS.layout
   } else {
     return 'misc' // For any uncategorized tokens
   }
