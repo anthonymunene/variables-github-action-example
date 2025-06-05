@@ -32,8 +32,9 @@ const compileThemeAssets = async (theme: string, themeFilePath: string, dependen
         await compileCategory(theme, category, themeFilePath, dependencies, buildPath);
     }
     
-    // Compile screen tokens separately
-    await compileScreenTokens(theme, dependencies, buildPath);
+    // Compile screen tokens separately - include theme file as dependency so screen tokens can reference theme tokens
+    const screenDependencies = [...dependencies, themeFilePath];
+    await compileScreenTokens(theme, screenDependencies, buildPath);
     
     // Add screen token categories to the index
     const allCategories = [...nonContentCategories, ...getScreenTokenCategories()];
