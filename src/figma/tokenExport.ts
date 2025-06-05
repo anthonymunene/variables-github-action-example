@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 import { ensureDirectoryExists, sanitizeFilename } from '../shared/utils/index.js';
-import { EXCLUDED_COLLECTIONS, TOKENS_DIR } from '../variables.js';
+import { EXCLUDED_COLLECTIONS, EXCLUDED_VARIABLE_CATEGORIES, TOKENS_DIR } from '../variables.js';
 
 import { getTokenCategory, green, rgbToHex } from './utils/index.js';
 import type { Token, TokensFile } from './types.js';
@@ -67,9 +67,9 @@ export function tokenFilesFromLocalVariables(localVariablesResponse: GetLocalVar
 
                 let obj: any = tokenFiles[filePath];
 
-                // if (shouldExclude(variable.name, EXCLUDED_VARIABLE_CATEGORIES)) {
-                //   return
-                // }
+                if (shouldExclude(variable.name, EXCLUDED_VARIABLE_CATEGORIES)) {
+                  return
+                }
                 variable.name.split('/').forEach((groupName) => {
                     obj[groupName] = obj[groupName] || {};
                     obj = obj[groupName];

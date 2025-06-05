@@ -21,4 +21,4 @@ export const VARIABLE_COLLECTIONS = {
     theme: 'theme',
     layout: 'screen',
 };
-export const BRANDS_DIR = '../../../../../src/brands';
+export const BRANDS_DIR = '../../../build';
