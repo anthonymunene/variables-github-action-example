@@ -15,11 +15,12 @@ To use the "Sync Figma variables to tokens" workflow, you must be a full member 
 
 Both workflows assume that you have a single Figma file with local variable collections, along with one or more tokens json files in the `tokens/` directory that adhere\* to the [draft W3C spec for Design Tokens](https://tr.designtokens.org/format/). For demonstration purposes, this directory contains the tokens exported from the [Get started with variables](https://www.figma.com/community/file/1253086684245880517/Get-started-with-variables) Community file. Have a copy of this file ready if you want to try out the workflow with these existing tokens.
 
-> \*See `src/token_types.ts` for more details on the format of the expected tokens json files, including the deviations from the draft design tokens spec we've had to make. **We expect there to be one tokens file per variable collection and mode.**
+> \*See `src/types.ts` for more details on the format of the expected tokens json files, including the deviations from the draft design tokens spec we've had to make. **We expect there to be one tokens file per variable collection and mode.**
 
 In addition, you must also have a [personal access token](https://www.figma.com/developers/api#access-tokens) for the Figma API to allow these workflows to authenticate with the API. For the "Sync Figma variables to tokens" workflow, the token must have at least the Read-only Variables scope selected. For the "Sync tokens to Figma" workflow, the token must have the Read and write Variables scope selected.
 
 ## Usage
+
 
 Before running either of these workflows, you'll need to create an [encrypted secret](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository) in your repository named `GH_ACTION_VARIABLES_SYNC_FIGMA_TOKEN` containing your personal access token.
 
